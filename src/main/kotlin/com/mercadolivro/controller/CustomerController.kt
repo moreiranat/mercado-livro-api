@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
@@ -21,7 +22,10 @@ class CustomerController {
     val customers = mutableListOf<CustomerModel>() //lista mutavel do tipo CustomerModel
 
     @GetMapping
-    fun getAll(): List<CustomerModel> {
+    fun getAll(@RequestParam name: String?): List<CustomerModel> { //String? --> o nome pode vir nulo
+        name?.let {
+            return customers.filter { it.name.contains(name, true) } //se o nome nao vier nulo, executa o bloco de código dentro do let, contendo o trecho do nome o ignorando letras maiusculas ou minusculas
+        }
         return customers
     }
 
