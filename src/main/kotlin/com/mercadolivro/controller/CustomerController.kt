@@ -4,6 +4,7 @@ import com.mercadolivro.controller.request.PostCustomerRequest
 import com.mercadolivro.model.CustomerModel
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -17,7 +18,7 @@ class CustomerController {
     val customers = mutableListOf<CustomerModel>() //lista mutavel do tipo CustomerModel
 
     @GetMapping
-    fun getCustomer(): List<CustomerModel> {
+    fun getAll(): List<CustomerModel> {
         return customers
     }
 
@@ -32,5 +33,10 @@ class CustomerController {
         }.toString() //passa o id para String
 
         customers.add(CustomerModel(id, customer.name, customer.email)) //adiciona esse novo CustomerModel na lista
+    }
+
+    @GetMapping("/{id}")
+    fun getCustomer(@PathVariable id: String): CustomerModel {
+        return customers.filter { it.id == id }.first() //vê se o id é igual ao que está sendo passado como parâmetro e retorna ele. Retorna o 1° registro que isso acontecer
     }
 }
