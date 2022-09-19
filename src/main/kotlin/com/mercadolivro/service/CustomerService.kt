@@ -1,12 +1,7 @@
 package com.mercadolivro.service
 
-import com.mercadolivro.controller.request.PostCustomerRequest
-import com.mercadolivro.controller.request.PutCustomerRequest
 import com.mercadolivro.model.CustomerModel
 import org.springframework.stereotype.Service
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestParam
 
 @Service
 class CustomerService {
@@ -20,23 +15,25 @@ class CustomerService {
         return customers
     }
 
-    fun createCustomer(customer: PostCustomerRequest) {
+    fun createCustomer(customer: CustomerModel) {
 
         val id = if(customers.isEmpty()) {
             1
         } else {
-            customers.last().id.toInt() + 1
+            customers.last().id!!.toInt() + 1
         }.toString() //passa o id para String
 
-        customers.add(CustomerModel(id, customer.name, customer.email)) //adiciona esse novo CustomerModel na lista
+        customer.id = id
+
+        customers.add(customer)
     }
 
     fun getCustomer(id: String): CustomerModel {
         return customers.filter { it.id == id }.first() //vê se o id é igual ao que está sendo passado como parâmetro e retorna ele. Retorna o 1° registro que isso acontecer
     }
 
-    fun update(id: String, customer: PutCustomerRequest) {
-        customers.filter { it.id == id }.first().let {
+    fun update(customer: CustomerModel) {
+        customers.filter { it.id == customer.id }.first().let {
             it.name = customer.name
             it.email = customer.email
         }
