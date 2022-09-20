@@ -21,14 +21,14 @@ class CustomerService {
             1
         } else {
             customers.last().id!!.toInt() + 1
-        }.toString() //passa o id para String
+        }
 
         customer.id = id
 
         customers.add(customer)
     }
 
-    fun getCustomer(id: String): CustomerModel {
+    fun getCustomer(id: Int): CustomerModel {
         return customers.filter { it.id == id }.first() //vê se o id é igual ao que está sendo passado como parâmetro e retorna ele. Retorna o 1° registro que isso acontecer
     }
 
@@ -39,7 +39,7 @@ class CustomerService {
         }
     }
 
-    fun delete(id: String) {
+    fun delete(id: Int) {
         customers.removeIf { it.id == id }
     }
 }
