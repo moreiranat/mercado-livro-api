@@ -1,8 +1,10 @@
 package com.mercadolivro.service
 
+import com.mercadolivro.enums.BookStatus
 import com.mercadolivro.model.BookModel
 import com.mercadolivro.repository.BookRepository
 import org.springframework.stereotype.Service
+import org.springframework.web.bind.annotation.PutMapping
 
 @Service
 class BookService(
@@ -10,6 +12,30 @@ class BookService(
     ){
 
     fun createBook(book: BookModel) {
+        bookRepository.save(book)
+    }
+
+    fun findAll(): List<BookModel> {
+        return bookRepository.findAll().toList()
+    }
+
+    fun findActives(): List<BookModel> {
+        return bookRepository.findByStatus(BookStatus.ATIVO)
+    }
+
+    fun findById(id: Int): BookModel {
+        return bookRepository.findById(id).orElseThrow() //tenta buscar por id, caso o id nao exista ele estoura um erro
+    }
+
+    fun delete(id: Int) { //nunca vai apagar os livros da base de dados (status cancelado)
+        val book = findById(id)
+
+        book.status = BookStatus.CANCELADO
+
+        update(book)
+    }
+
+    fun update(book: BookModel) {
         bookRepository.save(book)
     }
 
