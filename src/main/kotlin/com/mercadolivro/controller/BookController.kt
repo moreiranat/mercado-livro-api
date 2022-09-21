@@ -8,7 +8,6 @@ import com.mercadolivro.service.BookService
 import com.mercadolivro.service.CustomerService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import java.awt.print.Book
 
 @RestController
 @RequestMapping("books")
@@ -20,7 +19,7 @@ class BookController (
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody request: PostBookRequest) {
-        val customer = customerService.getById(request.customerId)
+        val customer = customerService.findById(request.customerId)
         bookService.createBook(request.toBookModel(customer))
     }
 
