@@ -26,7 +26,7 @@ class BookService(
     }
 
     fun findById(id: Int): BookModel {
-        return bookRepository.findById(id).orElseThrow() //tenta buscar por id, caso o id nao exista ele estoura um erro
+        return bookRepository.findById(id).orElseThrow{Exception("Não existe este recurso")} //tenta buscar por id, caso o id nao exista ele estoura um erro
     }
 
     fun delete(id: Int) { //nunca vai apagar os livros da base de dados (status cancelado)
