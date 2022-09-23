@@ -16,7 +16,7 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("customers")
 class CustomerController (
-    val customerService: CustomerService //injecao de dependencia
+    private val customerService: CustomerService //injecao de dependencia
     ) {
 
     @GetMapping
