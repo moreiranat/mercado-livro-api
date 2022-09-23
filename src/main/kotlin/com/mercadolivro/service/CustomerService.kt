@@ -47,4 +47,8 @@ class CustomerService (
 
         customerRepository.save(customer)
     }
+
+    fun emailAvailable(email: String): Boolean {
+        return !customerRepository.existsByEmail(email) //vai verificar se o e-mail existe, se existir vai retornar false. Essa função verifica se o e-mail esta livre para ser usado por isso coloca negação !, para retornar true
+    }
 }

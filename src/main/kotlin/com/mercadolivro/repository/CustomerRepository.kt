@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 interface CustomerRepository : JpaRepository<CustomerModel, Int> {
 
     fun findByNameContaining(name: String, pageable: Pageable): Page<CustomerModel> //busca por nome que contenha um trecho do texto
+    fun existsByEmail(email: String): Boolean
 }
