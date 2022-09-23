@@ -12,5 +12,9 @@ spring:
     pathmatch:
       matching-strategy: ant-path-matcher
 
+jwt:
+  secret: 8afc24e7-36b4-43ea-98fd-99cd60daa76d
+  expiration: 999999
+
 
 
