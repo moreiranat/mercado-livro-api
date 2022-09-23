@@ -2,6 +2,7 @@ package com.mercadolivro.service
 
 import com.mercadolivro.enums.CustomerStatus
 import com.mercadolivro.enums.Errors
+import com.mercadolivro.enums.Profile
 import com.mercadolivro.exception.NotFoundException
 import com.mercadolivro.model.CustomerModel
 import com.mercadolivro.repository.CustomerRepository
@@ -22,8 +23,11 @@ class CustomerService (
         return customerRepository.findAll(pageable)
     }
 
-    fun createCustomer(customer: CustomerModel) {
-        customerRepository.save(customer)
+    fun create(customer: CustomerModel) {
+        val customerCopy = customer.copy(
+            roles = setOf(Profile.CUSTOMER) //quem tentar se cadastrar na aplicação é um customer comum
+        )
+        customerRepository.save(customerCopy)
     }
 
     fun findById(id: Int): CustomerModel {

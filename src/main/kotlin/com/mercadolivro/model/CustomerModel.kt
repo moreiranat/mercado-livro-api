@@ -1,6 +1,7 @@
 package com.mercadolivro.model
 
 import com.mercadolivro.enums.CustomerStatus
+import com.mercadolivro.enums.Profile
 import javax.persistence.*
 
 @Entity(name = "customer")
@@ -21,5 +22,11 @@ data class CustomerModel(
     var status: CustomerStatus,
 
     @Column
-    val password: String
+    val password: String,
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = Profile::class, fetch = FetchType.EAGER) //FetchType.EAGER: toda vez que eu for bucar um customer, por ex, toda vez que der um findById, findByEmail, também queremos essas roles. Entao toda vez que for bucar, também busca as informações na tabela de Profile, de Customer Role
+    @CollectionTable(name = "customer_roles", joinColumns = [JoinColumn(name = "customer_id")])
+    var roles: Set<Profile> = setOf() //Set porque é uma lista que não recebe valores iguais, nunca vai precisar de valores iguais nesse caso
 )
