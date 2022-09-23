@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("books")
@@ -22,7 +23,7 @@ class BookController (
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody request: PostBookRequest) {
+    fun create(@RequestBody @Valid request: PostBookRequest) {
         val customer = customerService.findById(request.customerId)
         bookService.createBook(request.toBookModel(customer))
     }
@@ -50,10 +51,9 @@ class BookController (
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun update(@PathVariable id: Int, @RequestBody book: PutBookRequest) {
+    fun update(@PathVariable id: Int, @RequestBody book: PutBookRequest) { //não precisa colocar @Valid os atributos de PutBookRequest são nullable, ou seja, podem não ser recebidos
         val bookSaved = bookService.findById(id)
         bookService.update(book.toBookModel(bookSaved))
-
     }
 
 
