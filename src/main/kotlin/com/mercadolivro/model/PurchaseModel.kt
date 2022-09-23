@@ -27,7 +27,7 @@ data class PurchaseModel(
     @JoinTable(name = "purchase_book", //intersecção de compras e livros
         joinColumns = [JoinColumn(name = "purchase_id")],
         inverseJoinColumns = [JoinColumn(name = "book_id")])
-    val books: List<BookModel>,
+    val books: MutableList<BookModel>,
 
     @Column
     val nfe: String? = null, //nota fiscal eletronica
