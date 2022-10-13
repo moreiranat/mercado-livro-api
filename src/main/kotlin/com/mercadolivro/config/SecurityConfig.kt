@@ -1,5 +1,6 @@
 package com.mercadolivro.config
 
+import com.mercadolivro.enums.Role
 import com.mercadolivro.repository.CustomerRepository
 import com.mercadolivro.security.AuthenticationFilter
 import com.mercadolivro.security.AuthorizationFilter
@@ -31,6 +32,10 @@ class SecurityConfig(
         "/customers"
     )
 
+    private val ADMIN_MATCHERS = arrayOf(
+        "/admin/**" // ** --> inclui todas as rotas que começam com /admin/
+    )
+
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth.userDetailsService(userDetails).passwordEncoder(bCryptPasswordEncoder())
     }
@@ -40,6 +45,7 @@ class SecurityConfig(
         http.authorizeRequests()
             .antMatchers(*PUBLIC_MATCHERS).permitAll()
             .antMatchers(HttpMethod.POST, *PUBLIC_POST_MATCHERS).permitAll() //tá permitindo a requisição POST na url /customers. Podem ter várias requisições liberadas
+            .antMatchers(*ADMIN_MATCHERS).hasAuthority(Role.ADMIN.description)
             .anyRequest().authenticated() //todas as requests que chegarem têm que está autenticadas
         http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository, jwtUtil))
         http.addFilter(AuthorizationFilter(authenticationManager(), userDetails, jwtUtil))
