@@ -3,7 +3,9 @@ package com.mercadolivro.controller
 import com.mercadolivro.controller.request.PostBookRequest
 import com.mercadolivro.controller.request.PutBookRequest
 import com.mercadolivro.controller.response.BookResponse
+import com.mercadolivro.controller.response.PageResponse
 import com.mercadolivro.extension.toBookModel
+import com.mercadolivro.extension.toPageResponse
 import com.mercadolivro.extension.toResponse
 import com.mercadolivro.service.BookService
 import com.mercadolivro.service.CustomerService
@@ -29,8 +31,8 @@ class BookController (
     }
 
     @GetMapping
-    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<BookResponse> { //page = 0 é a pagina inicial (pagina 0), é o valor default (se não passar nada vai pegar a pagina 0). size = 10 é a quantidade de registros que terão na pagina
-        return bookService.findAll(pageable).map { it.toResponse() }
+    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): PageResponse<BookResponse> { //page = 0 é a pagina inicial (pagina 0), é o valor default (se não passar nada vai pegar a pagina 0). size = 10 é a quantidade de registros que terão na pagina
+        return bookService.findAll(pageable).map { it.toResponse() }.toPageResponse()
     }
 
     @GetMapping("/active") //busca os livros com status ativo
