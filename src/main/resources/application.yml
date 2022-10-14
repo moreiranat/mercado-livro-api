@@ -1,11 +1,13 @@
 spring:
-  jpa:
-    hibernate:
-      ddl-auto: update
   datasource:
     url: jdbc:mysql://localhost:3306/mercadolivro?createDatabaseIfNotExist=true
     username: root
     password: mynewpassword
+  profiles:
+    active: dev
+  jpa:
+    hibernate:
+      ddl-auto: update
   jackson:
     default-property-inclusion: non_null
   mvc:
