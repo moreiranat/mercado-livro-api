@@ -40,6 +40,10 @@ class SecurityConfig(
         "/customers"
     )
 
+    private val PUBLIC_GET_MATCHERS = arrayOf(
+        "/books"
+    )
+
     private val ADMIN_MATCHERS = arrayOf(
         "/admin/**" // ** --> inclui todas as rotas que começam com /admin/
     )
@@ -53,6 +57,7 @@ class SecurityConfig(
         http.authorizeRequests()
             .antMatchers(*PUBLIC_MATCHERS).permitAll()
             .antMatchers(HttpMethod.POST, *PUBLIC_POST_MATCHERS).permitAll() //tá permitindo a requisição POST na url /customers. Podem ter várias requisições liberadas
+            .antMatchers(HttpMethod.GET, *PUBLIC_GET_MATCHERS).permitAll()
             .antMatchers(*ADMIN_MATCHERS).hasAuthority(Role.ADMIN.description)
             .anyRequest().authenticated() //todas as requests que chegarem têm que está autenticadas
         http.addFilter(AuthenticationFilter(authenticationManager(), customerRepository, jwtUtil))
