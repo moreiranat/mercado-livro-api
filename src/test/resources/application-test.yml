@@ -1,8 +1,8 @@
 spring:
   profiles:
-    active: dev
+    active: test
   datasource:
-    url: jdbc:mysql://localhost:3306/mercadolivro?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/mercadolivrotest?createDatabaseIfNotExist=true
     username: root
     password: mynewpassword
   jpa:

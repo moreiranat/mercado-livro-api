@@ -21,10 +21,17 @@ class CustomerController (
     private val customerService: CustomerService //injecao de dependencia
     ) {
 
+    //sem Pageable
     @GetMapping
-    fun getAll(@RequestParam name: String?, @PageableDefault(page = 0, size = 10) pageable: Pageable): Page<CustomerResponse> {
-       return customerService.getAll(name, pageable).map { it.toResponse() } //passa por todos os objetos da lista e transforma em um objeto it.toResponse. Vai transformar toda a lista em uma lista de CustomerResponse
+    fun getAll(@RequestParam name: String?): List<CustomerResponse> {
+        return customerService.getAll(name).map { it.toResponse() } //passa por todos os objetos da lista e transforma em um objeto it.toResponse. Vai transformar toda a lista em uma lista de CustomerResponse
     }
+
+    //com Pageable
+//    @GetMapping
+//    fun getAll(@RequestParam name: String?, @PageableDefault(page = 0, size = 10) pageable: Pageable): Page<CustomerResponse> {
+//       return customerService.getAll(name, pageable).map { it.toResponse() } //passa por todos os objetos da lista e transforma em um objeto it.toResponse. Vai transformar toda a lista em uma lista de CustomerResponse
+//    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

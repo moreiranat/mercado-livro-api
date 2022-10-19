@@ -18,11 +18,20 @@ class CustomerService (
     private val bCrypt: BCryptPasswordEncoder
     ) {
 
-    fun getAll(name: String?, pageable: Pageable): Page<CustomerModel> { //String? --> o nome pode vir nulo
+    //com Pageable
+//    fun getAll(name: String?, pageable: Pageable): Page<CustomerModel> { //String? --> o nome pode vir nulo
+//        name?.let {
+//            return customerRepository.findByNameContaining(it, pageable)
+//        }
+//        return customerRepository.findAll(pageable)
+//    }
+
+    //sem Pageable
+    fun getAll(name: String?): List<CustomerModel> { //String? --> o nome pode vir nulo
         name?.let {
-            return customerRepository.findByNameContaining(it, pageable)
+            return customerRepository.findByNameContaining(it)
         }
-        return customerRepository.findAll(pageable)
+        return customerRepository.findAll().toList()
     }
 
     fun create(customer: CustomerModel) {
