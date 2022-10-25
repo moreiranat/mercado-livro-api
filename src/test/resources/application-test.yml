@@ -1,10 +1,8 @@
 spring:
-  profiles:
-    active: test
   datasource:
     url: jdbc:mysql://localhost:3306/mercadolivrotest?createDatabaseIfNotExist=true
     username: root
-    password: mynewpassword
+    password: root
   jpa:
     hibernate:
       ddl-auto: update
